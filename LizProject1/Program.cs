@@ -10,8 +10,9 @@ namespace LizProject1
     {
         static void Main(string[] args)
         {
-            Bunny bunny = new Bunny("green");
-            WriteSlowMessage(bunny.FullSummaryBunny());
+            Car car = new Car("blue");
+            WriteSlowMessage(car.FullSummaryCar());
+
             Console.ReadKey();
         }
         static void MultiMenu()
