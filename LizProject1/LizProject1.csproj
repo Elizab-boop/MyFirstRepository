@@ -45,7 +45,10 @@
   <ItemGroup>
     <Compile Include="ClassStuff\Animal.cs" />
     <Compile Include="ClassStuff\Bunny.cs" />
+    <Compile Include="ClassStuff\Car.cs" />
     <Compile Include="ClassStuff\Mammal.cs" />
+    <Compile Include="ClassStuff\Reptile.cs" />
+    <Compile Include="ClassStuff\Vehical.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Walter.cs" />
