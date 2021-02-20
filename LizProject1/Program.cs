@@ -10,8 +10,9 @@ namespace LizProject1
     {
         static void Main(string[] args)
         {
-            Gecko gecko = new Gecko("brown spotted");
-            WriteSlowMessage(gecko.FullSummaryGecko());
+            SubClass subClass = new SubClass();
+            subClass.functionOne();
+            Console.WriteLine(subClass.functionTwo());
 
             Console.ReadKey();
         }
