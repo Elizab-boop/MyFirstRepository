@@ -40,5 +40,10 @@ namespace LizProject1
             return $"This reptile {eggMessage} and {legMessage}.";
         }
 
+        public virtual string MakeMouthSound() 
+        {
+            return "Hiss!"; 
+        }
+
     }
 }

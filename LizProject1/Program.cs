@@ -10,8 +10,8 @@ namespace LizProject1
     {
         static void Main(string[] args)
         {
-            Car car = new Car("blue");
-            WriteSlowMessage(car.FullSummaryCar());
+            Gecko gecko = new Gecko("brown spotted");
+            WriteSlowMessage(gecko.FullSummaryGecko());
 
             Console.ReadKey();
         }

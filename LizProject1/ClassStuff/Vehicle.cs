@@ -33,7 +33,7 @@ namespace LizProject1
             {
                 wheelMessage = "has two wheels";
             }
-            return $"This vehical {fuelMessage} and {wheelMessage}.";
+            return $"This vehicle {fuelMessage} and {wheelMessage}.";
 
         }
     }
