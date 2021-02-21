@@ -44,10 +44,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClassStuff\Animal.cs" />
+    <Compile Include="ClassStuff\BaseClass.cs" />
     <Compile Include="ClassStuff\Bunny.cs" />
+    <Compile Include="ClassStuff\Car.cs" />
     <Compile Include="ClassStuff\Mammal.cs" />
+    <Compile Include="ClassStuff\Reptile.cs" />
+    <Compile Include="ClassStuff\SubClass.cs" />
+    <Compile Include="ClassStuff\Vehicle.cs" />
+    <Compile Include="ClassStuff\Gecko.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ClassStuff\Snake.cs" />
     <Compile Include="Walter.cs" />
   </ItemGroup>
   <ItemGroup>
