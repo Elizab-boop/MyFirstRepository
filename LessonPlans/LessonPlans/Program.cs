@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Text;
 
 namespace LessonPlans
 {
@@ -8,10 +10,14 @@ namespace LessonPlans
         private static int waitTime = 50;
         static void Main(string[] args)
         {
-            Person beth = new Elizabeth();
+            int number = 3;
+            char character = (char)number;
 
-            Console.WriteLine((beth as Elizabeth).SummarizeElizabeth());
+            Console.ReadKey();
         }
+
+        // ASCII            UTF-8                                       UTF-16
+        // 10101010         10101010 10101010 10101010 10101010         10101010 10101010 10101010 10101010 10101010 10101010 10101010 10101010
 
         private static void MenuPrograsm()
         {
