@@ -23,6 +23,19 @@ namespace UIExample
         public MainWindow()
         {
             InitializeComponent();
+
+            HomeButton.Click += ShowDialog;
+            MagicButton.Click += MagicDialog;
+        }
+
+        private void MagicDialog(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Spirit Fangas!");
+        }
+
+        private void ShowDialog(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Navigating Home");
         }
     }
 }
