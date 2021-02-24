@@ -176,10 +176,17 @@ namespace TestBlazorApp.Data
                 }
             };
         }
-        public Task<PlantModel[]> GetPlantModelAsync()
+        public Task<PlantModel[]> GetPlantModelAsync(int startValue, int maxValue)
         {
-            PlantModel[] returnList = new PlantModel[20];
+            PlantModel[] returnList = new PlantModel[maxValue];
 
+            int counter = 0;
+
+            for (int i = startValue; i < startValue + maxValue; i++)
+                {
+                returnList[counter] = PlantModels[i];
+                counter++;
+                }
             return Task.FromResult(returnList);
         }
 

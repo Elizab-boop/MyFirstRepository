@@ -1,6 +1,5 @@
 ﻿@page "/plantcatalogue"
 @using TestBlazorApp.Data
-@inject MockPlantProvider PlantModel
 <style>
     body {
         background-color: olivedrab;
@@ -47,7 +46,8 @@ else
     protected override async Task OnInitializedAsync()
     {
         await Task.Run(() => { System.Threading.Thread.Sleep(3000); });
-        PlantModels = await GetPlantModelAsync();
+        MockPlantProvider provider = new MockPlantProvider();
+        PlantModels = await provider.GetPlantModelAsync(2 , 10);
     }
 
 }
