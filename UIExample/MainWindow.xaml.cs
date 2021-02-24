@@ -25,11 +25,17 @@ namespace UIExample
             InitializeComponent();
 
             HomeButton.Click += HomeClick;
+            UWUbutton.Click += UWUClick;
         }
 
         private void HomeClick(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Navigating Home!");
+        }
+
+        private void UWUClick(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("UWU!!!!!!!!!!!!!!!!!!!!!!!!");
         }
     }
 }

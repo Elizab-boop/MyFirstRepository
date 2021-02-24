@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LizProject1", "LizProject1.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UIExample", "..\UIExample\UIExample.csproj", "{2B442D36-7D0C-435E-90F4-15A7C9029209}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestBlazorApp", "..\TestBlazorApp\TestBlazorApp.csproj", "{212F04D6-25ED-4E65-9F17-080BFAC33572}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestBlazorApp", "..\TestBlazorApp\TestBlazorApp.csproj", "{212F04D6-25ED-4E65-9F17-080BFAC33572}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
