@@ -9,7 +9,13 @@
 <h1>Plant Catalogue</h1>
 <h4>For all of your planting needs!</h4>
 
-@if (PlantModels == null)
+<button class="btn btn-primary" @onclick="GetData">Plant Button</button>
+
+@if (PlantModels == null && isLoading == false)
+{
+    <p><em>Press button to get data.</em></p>
+}
+else if (isLoading == true)
 {
     <p><em>Loading...</em></p>
 }
@@ -44,12 +50,23 @@ else
 @code {
     private PlantModel[] PlantModels;
 
+    private bool isLoading = false;
+    
     protected override async Task OnInitializedAsync()
     {
-        await Task.Run(() => { System.Threading.Thread.Sleep(3000); });
-        
-        PlantModels = await Provider.GetPlantModelAsync(2 , 10);
+
     }
+    private async Task GetData()
+    {
+        isLoading = true;
+        await Task.Run(() => { System.Threading.Thread.Sleep(3000); });
+
+        PlantModels = await Provider.GetPlantModelAsync(2, 10);
+        isLoading = false;
+    }
+
+
+
 
 }
 
