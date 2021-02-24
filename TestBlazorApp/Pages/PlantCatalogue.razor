@@ -1,6 +1,6 @@
 ﻿@page "/plantcatalogue"
 @using TestBlazorApp.Data
-@inject MockPlantProvider PlantModel 
+@inject MockPlantProvider PlantModel
 <style>
     body {
         background-color: olivedrab;
@@ -9,30 +9,37 @@
 <h1>Plant Catalogue</h1>
 <h4>For all of your planting needs!</h4>
 
-<table class="table">
-    <thead style="color:azure">
-        <tr>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Zone</th>
-            <th>Description</th>
-            <th>Price</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var PlantModel in PlantModels)
-        {
-        <tr>
-            <td>@PlantModel.Name</td>
-            <td>@PlantModel.Type</td>
-            <td>@PlantModel.Zone</td>
-            <td>@PlantModel.Description</td>
-            <td>@PlantModel.Price</td>
-        </tr>
-        }
-    </tbody>
-        
-</table>
+@if (PlantModels == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead style="color:azure">
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Zone</th>
+                <th>Description</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var PlantModel in PlantModels)
+            {
+                <tr>
+                    <td>@PlantModel.Name</td>
+                    <td>@PlantModel.Type</td>
+                    <td>@PlantModel.Zone</td>
+                    <td>@PlantModel.Description</td>
+                    <td>@PlantModel.Price</td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+}
 
 @code {
     private PlantModel[] PlantModels;
@@ -40,7 +47,7 @@
     protected override async Task OnInitializedAsync()
     {
         await Task.Run(() => { System.Threading.Thread.Sleep(3000); });
-        PlantModels = await PlantModel.GetPlantModelAsync();
+        PlantModels = await GetPlantModelAsync();
     }
 
 }
