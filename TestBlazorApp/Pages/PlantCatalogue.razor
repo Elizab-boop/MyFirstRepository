@@ -1,8 +1,9 @@
 ﻿@page "/plantcatalogue"
-
+@using TestBlazorApp.Data
+@inject MockPlantProvider PlantModel 
 <style>
     body {
-        background-color:olivedrab;
+        background-color: olivedrab;
     }
 </style>
 <h1>Plant Catalogue</h1>
@@ -19,45 +20,28 @@
         </tr>
     </thead>
     <tbody>
+        @foreach (var PlantModel in PlantModels)
+        {
         <tr>
-            <td>Rainier Cherry</td>
-            <td>Fruit Tree</td>
-            <td>5 - 8</td>
-            <td>Delicious Yellow Cherries</td>
-            <td>$10</td>
+            <td>@PlantModel.Name</td>
+            <td>@PlantModel.Type</td>
+            <td>@PlantModel.Zone</td>
+            <td>@PlantModel.Description</td>
+            <td>@PlantModel.Price</td>
         </tr>
+        }
     </tbody>
-    <tbody>
-        <tr>
-            <td>Meyer Lemon</td>
-            <td>Fruit Tree</td>
-            <td>8 - 11</td>
-            <td>Tasty Lemons</td>
-            <td>$12</td>
-        </tr>
-    </tbody>
-    <tbody>
-        <tr>
-            <td>Blackberry</td>
-            <td>Shrub</td>
-            <td>7 - 9</td>
-            <td>The Juciest Blackberries You've Ever Experienced</td>
-            <td>$8</td>
-        </tr>
-    </tbody>
-    <tbody>
-        <tr>
-            <td>Dwarf Balsam Fir</td>
-            <td>Ornamental Tree</td>
-            <td>3 - 6</td>
-            <td>Bitchin Decorative Coniferous Tree</td>
-            <td>$15</td>
-        </tr>
-    </tbody>
+        
 </table>
 
 @code {
+    private PlantModel[] PlantModels;
 
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Run(() => { System.Threading.Thread.Sleep(3000); });
+        PlantModels = await PlantModel.GetPlantModelAsync();
+    }
 
 }
 
