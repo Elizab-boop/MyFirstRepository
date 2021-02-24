@@ -7,11 +7,22 @@ namespace TestBlazorApp.Data
 {
     public class MockPlantProvider
     {
+
+        public MockPlantProvider()
+        {
+            //assign PlantModels here
+        }
+
         private PlantModel[] PlantModels;
 
-        public Task<PlantModel[]> GetPlantModelAsync()
+        public Task<PlantModel[]> GetPlantModelAsync() //needs two parameters. one for the starting index and one for the max amount of data to return
         {
-            return Task.FromResult(Enumerable.Range(1, 20).Select(index => new PlantModel
+            //for now just return items with the index 0 - 5 from PlantModels and store the new local variable below
+            PlantModel[] returnList = new PlantModel[5]; // change out the 5 for the variable that represents the max amount. However, test using the static 5 first to verify it works
+
+            //use for loop here to fill returnList
+
+            return Task.FromResult(returnList);
 
            PlantModels = new PlantModel[]
             {
