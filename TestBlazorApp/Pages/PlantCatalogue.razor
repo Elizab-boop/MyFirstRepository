@@ -1,5 +1,6 @@
 ﻿@page "/plantcatalogue"
 @using TestBlazorApp.Data
+@using TestBlazorApp.InputModels
 @inject MockPlantProvider Provider
 <style>
     body {
@@ -8,8 +9,21 @@
 </style>
 <h1>Plant Catalogue</h1>
 <h4>For all of your planting needs!</h4>
+<EditForm Model="inputModel">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <label>
+        <InputSelect @bind-Value="inputModel.ID">
+            @for (int i = 1; i <= inputModel.MaxValue; i++)
+            {
+                <option value="@i">@i</option>
+            }
+        </InputSelect>
+    </label>
 
-<button class="btn btn-primary" @onclick="GetData">Plant Button</button>
+    <button class="btn btn-primary" @onclick="GetData">Plant Button</button>
+</EditForm>
+
 
 @if (PlantModels == null && isLoading == false)
 {
@@ -50,18 +64,22 @@ else
 @code {
     private PlantModel[] PlantModels;
 
+    private DropDownItemSelector inputModel = new DropDownItemSelector();
+
     private bool isLoading = false;
     
     protected override async Task OnInitializedAsync()
     {
 
     }
+
     private async Task GetData()
     {
         isLoading = true;
         await Task.Run(() => { System.Threading.Thread.Sleep(3000); });
 
-        PlantModels = await Provider.GetPlantModelAsync(2, 10);
+        int startValue = Convert.ToInt32(inputModel.ID);
+        PlantModels = await Provider.GetPlantModelAsync(startValue, 10);
         isLoading = false;
     }
 

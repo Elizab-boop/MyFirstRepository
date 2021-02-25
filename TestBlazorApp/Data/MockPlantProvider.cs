@@ -9,13 +9,13 @@ namespace TestBlazorApp.Data
     {
         private PlantModel[] PlantModels;
 
-
         public MockPlantProvider()
         {
             PlantModels = new PlantModel[]
             {
                 new PlantModel()
                 {
+                    ID = 1,
                     Name = "Rainier Cherry",
                     Type = "Fruit Tree",
                     Zone = "5-8",
@@ -24,6 +24,7 @@ namespace TestBlazorApp.Data
                 },
                 new PlantModel()
                 {
+                    ID = 2,
                     Name = "Meyer Lemon",
                     Type = "Fruit Tree",
                     Zone = "8-11",
@@ -32,6 +33,7 @@ namespace TestBlazorApp.Data
                 },
                 new PlantModel()
                 {
+                    ID = 3,
                     Name = "Blackberry",
                     Type = "Shrub",
                     Zone = "7-9",
@@ -40,6 +42,7 @@ namespace TestBlazorApp.Data
                 },
                  new PlantModel()
                 {
+                    ID = 4,
                     Name = "Dwarf Balsam Fir",
                     Type = "Ornamental Tree",
                     Zone = "3-6",
@@ -48,6 +51,7 @@ namespace TestBlazorApp.Data
                 },
                  new PlantModel()
                 {
+                    ID = 5,
                     Name = "Pixie Crunch Apple",
                     Type = "Fruit Tree",
                     Zone = "5-8",
@@ -56,6 +60,7 @@ namespace TestBlazorApp.Data
                 },
                  new PlantModel()
                 {
+                    ID = 6,
                     Name = "Asparagus",
                     Type = "Vegetable",
                     Zone = "3-8",
@@ -64,6 +69,7 @@ namespace TestBlazorApp.Data
                 },
                  new PlantModel()
                 {
+                    ID = 7,
                     Name = "Sweet Corn",
                     Type = "Vegetable",
                     Zone = "3-9",
@@ -72,6 +78,7 @@ namespace TestBlazorApp.Data
                 },
                  new PlantModel()
                 {
+                    ID = 8,
                     Name = "Hybrid Tea Rose",
                     Type = "Flowering Shrub",
                     Zone = "4-10",
@@ -80,6 +87,7 @@ namespace TestBlazorApp.Data
                 },
                  new PlantModel()
                 {
+                    ID = 9,
                     Name = "Sugar Maple",
                     Type = "Shade Tree",
                     Zone = "3-8",
@@ -88,6 +96,7 @@ namespace TestBlazorApp.Data
                 },
                  new PlantModel()
                 {
+                    ID = 10,
                     Name = "Pecan Tree",
                     Type = "Nut Tree",
                     Zone = "5-8",
@@ -96,6 +105,7 @@ namespace TestBlazorApp.Data
                 },
                  new PlantModel()
                 {
+                    ID = 11,
                     Name = "Weeping Willow",
                     Type = "Shade Tree",
                     Zone = "6-8",
@@ -104,6 +114,8 @@ namespace TestBlazorApp.Data
                 },
                  new PlantModel()
                 {
+
+                    ID = 12,
                     Name = "Sunflower Seed Blend",
                     Type = "Flower Seeds",
                     Zone = "3-9",
@@ -112,6 +124,7 @@ namespace TestBlazorApp.Data
                 },
                  new PlantModel()
                 {
+                    ID = 13,
                     Name = "Hummingbird Mint Plant",
                     Type = "Flower Seeds",
                     Zone = "5-10",
@@ -120,6 +133,7 @@ namespace TestBlazorApp.Data
                 },
                  new PlantModel()
                 {
+                    ID = 14,
                     Name = "Ice Cream Banana",
                     Type = "Fruit Tree",
                     Zone = "8-11",
@@ -128,6 +142,7 @@ namespace TestBlazorApp.Data
                 },
                  new PlantModel()
                 {
+                    ID = 15,
                     Name = "Luffa Gourd",
                     Type = "Vegetable Seeds",
                     Zone = "3-9",
@@ -136,6 +151,7 @@ namespace TestBlazorApp.Data
                 },
                  new PlantModel()
                 {
+                    ID = 16,
                     Name = "Air Plant",
                     Type = "Decorative",
                     Zone = "9-11",
@@ -144,6 +160,7 @@ namespace TestBlazorApp.Data
                 },
                  new PlantModel()
                 {
+                    ID = 17,
                     Name = "Aloe Vera",
                     Type = "Succulent",
                     Zone = "8-11",
@@ -152,6 +169,7 @@ namespace TestBlazorApp.Data
                 },
                  new PlantModel()
                 {
+                    ID = 18,
                     Name = "Birdhouse Gourds",
                     Type = "Vegetable Seeds",
                     Zone = "3-9",
@@ -160,6 +178,7 @@ namespace TestBlazorApp.Data
                 },
                  new PlantModel()
                 {
+                    ID = 19,
                     Name = "Crape Myrtle",
                     Type = "Flowering Shrub",
                     Zone = "6-10",
@@ -168,6 +187,7 @@ namespace TestBlazorApp.Data
                 },
                  new PlantModel()
                 {
+                    ID = 20,
                     Name = "White Spruce",
                     Type = "Shade Tree",
                     Zone = "2-6",
@@ -176,21 +196,17 @@ namespace TestBlazorApp.Data
                 }
             };
         }
-        public Task<PlantModel[]> GetPlantModelAsync(int startValue, int maxValue)
+        public Task<PlantModel[]> GetPlantModelAsync(int startValue, int amountOfItems)
         {
-            PlantModel[] returnList = new PlantModel[maxValue];
+            //A bit advanced, but so much easier. 
+            //We could also use a List<PlantModel>, which is less mathy and still uses loops like you're used to
+            PlantModel[] returnList = PlantModels.Where(x => 
+                (
+                    x.ID >= startValue && 
+                    x.ID < (startValue + amountOfItems))
+                ).ToArray();
 
-            int counter = 0;
-
-            for (int i = startValue; i < startValue + maxValue; i++)
-                {
-                returnList[counter] = PlantModels[i];
-                counter++;
-                }
             return Task.FromResult(returnList);
         }
-
-
-
     }
 }
