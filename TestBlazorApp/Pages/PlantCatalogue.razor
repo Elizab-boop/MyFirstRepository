@@ -1,62 +1,89 @@
 ﻿@page "/plantcatalogue"
-
+@using TestBlazorApp.Data
+@using TestBlazorApp.InputModels
+@inject MockPlantProvider Provider
 <style>
     body {
-        background-color:olivedrab;
+        background-color: olivedrab;
     }
 </style>
 <h1>Plant Catalogue</h1>
 <h4>For all of your planting needs!</h4>
+<EditForm Model="inputModel">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <label>
+        <InputSelect @bind-Value="inputModel.ID">
+            @for (int i = 1; i <= inputModel.MaxValue; i++)
+            {
+                <option value="@i">@i</option>
+            }
+        </InputSelect>
+    </label>
 
-<table class="table">
-    <thead style="color:azure">
-        <tr>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Zone</th>
-            <th>Description</th>
-            <th>Price</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Rainier Cherry</td>
-            <td>Fruit Tree</td>
-            <td>5 - 8</td>
-            <td>Delicious Yellow Cherries</td>
-            <td>$10</td>
-        </tr>
-    </tbody>
-    <tbody>
-        <tr>
-            <td>Meyer Lemon</td>
-            <td>Fruit Tree</td>
-            <td>8 - 11</td>
-            <td>Tasty Lemons</td>
-            <td>$12</td>
-        </tr>
-    </tbody>
-    <tbody>
-        <tr>
-            <td>Blackberry</td>
-            <td>Shrub</td>
-            <td>7 - 9</td>
-            <td>The Juciest Blackberries You've Ever Experienced</td>
-            <td>$8</td>
-        </tr>
-    </tbody>
-    <tbody>
-        <tr>
-            <td>Dwarf Balsam Fir</td>
-            <td>Ornamental Tree</td>
-            <td>3 - 6</td>
-            <td>Bitchin Decorative Coniferous Tree</td>
-            <td>$15</td>
-        </tr>
-    </tbody>
-</table>
+    <button class="btn btn-primary" @onclick="GetData">Plant Button</button>
+</EditForm>
+
+
+@if (PlantModels == null && isLoading == false)
+{
+    <p><em>Press button to get data.</em></p>
+}
+else if (isLoading == true)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead style="color:azure">
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Zone</th>
+                <th>Description</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var PlantModel in PlantModels)
+            {
+                <tr>
+                    <td>@PlantModel.Name</td>
+                    <td>@PlantModel.Type</td>
+                    <td>@PlantModel.Zone</td>
+                    <td>@PlantModel.Description</td>
+                    <td>@PlantModel.Price</td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+}
 
 @code {
+    private PlantModel[] PlantModels;
+
+    private DropDownItemSelector inputModel = new DropDownItemSelector();
+
+    private bool isLoading = false;
+    
+    protected override async Task OnInitializedAsync()
+    {
+
+    }
+
+    private async Task GetData()
+    {
+        isLoading = true;
+        await Task.Run(() => { System.Threading.Thread.Sleep(3000); });
+
+        int startValue = Convert.ToInt32(inputModel.ID);
+        PlantModels = await Provider.GetPlantModelAsync(startValue, 10);
+        isLoading = false;
+    }
+
+
 
 
 }
