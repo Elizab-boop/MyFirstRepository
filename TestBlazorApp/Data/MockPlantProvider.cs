@@ -208,5 +208,13 @@ namespace TestBlazorApp.Data
 
             return Task.FromResult(returnList);
         }
+
+        public Task<int> GetDBRowCountsFromIndex(int rowsPerPage)
+        {
+            //Get the amount of pages. Use the Ceiling function to round up to the nearest whole number if there's any left over.
+            int pages = Convert.ToInt32(Math.Ceiling((double)PlantModels.Length / (double)rowsPerPage));
+
+            return Task.FromResult(pages);
+        }
     }
 }

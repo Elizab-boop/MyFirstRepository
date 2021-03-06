@@ -9,19 +9,20 @@
 </style>
 <h1>Plant Catalogue</h1>
 <h4>For all of your planting needs!</h4>
-<EditForm Model="inputModel">
+<EditForm Model="inputModel" OnValidSubmit="GetData">
     <DataAnnotationsValidator />
     <ValidationSummary />
     <label>
-        <InputSelect @bind-Value="inputModel.ID">
-            @for (int i = 1; i <= inputModel.MaxValue; i++)
-            {
-                <option value="@i">@i</option>
-            }
+        Choose Amount of data to display: 
+        <InputSelect ValueChanged="@( (string value) => DataPerRowChanged(value) )" Value="@inputModel.RowsPerPage" ValueExpression="@( () => inputModel.RowsPerPage )">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
         </InputSelect>
     </label>
 
-    <button class="btn btn-primary" @onclick="GetData">Plant Button</button>
+    <button class="btn btn-primary"  type="submit">Plant Button</button>
 </EditForm>
 
 
@@ -59,6 +60,24 @@ else
         </tbody>
 
     </table>
+
+    <EditForm Model="inputModel">
+        <label>
+            Page Selection: 
+            <InputSelect ValueChanged="@( (string s) => ChangePage(s) )" Value="@inputModel.CurrentPage" ValueExpression="@( () => inputModel.CurrentPage )">>
+            @*  ValueChanged tells the code to trigger a function when the user selects a new value
+                Value tells the code where to get it's value for the input. 
+                ValueExpression is used to determine what type of value is being set in the ValueChanged and Value fields. In this case it's the string type from our model.  *@
+                @for (int i = 1; i <= pageAmount; i++)
+                    {
+                    <option value="@i">@i</option>
+                    }
+            </InputSelect>
+        </label>
+    </EditForm>
+
+
+
 }
 
 @code {
@@ -67,22 +86,73 @@ else
     private DropDownItemSelector inputModel = new DropDownItemSelector();
 
     private bool isLoading = false;
-    
+
+    int pageAmount = 1;
+
     protected override async Task OnInitializedAsync()
     {
+        //set page amount on page load, page should count as loading
+        isLoading = true;
+        pageAmount = await GetPages(); //set the amount of pages left to fill the dropdown
+        isLoading = false;
+    }
 
+    private async Task DataPerRowChanged(string rows)
+    {
+        inputModel.RowsPerPage = rows;
+        DeterminePageNumber();
+        await GetData();
     }
 
     private async Task GetData()
     {
         isLoading = true;
-        await Task.Run(() => { System.Threading.Thread.Sleep(3000); });
+        await Task.Run(() => { System.Threading.Thread.Sleep(2000); });
 
-        int startValue = Convert.ToInt32(inputModel.ID);
-        PlantModels = await Provider.GetPlantModelAsync(startValue, 10);
+        int rows = Convert.ToInt32(inputModel.RowsPerPage);
+
+        PlantModels = await Provider.GetPlantModelAsync(inputModel.CurrentIndex, rows);
+        inputModel.CurrentIndex = PlantModels.First().ID; // get the first index's ID so we know where we are at
+        pageAmount = await GetPages(); //set the amount of pages left to fill the dropdown
+
         isLoading = false;
     }
 
+    private async Task ChangePage(string _page)
+    {
+        inputModel.CurrentPage = _page;
+        int page = Convert.ToInt32(_page);
+        int rows = Convert.ToInt32(inputModel.RowsPerPage);
+
+        inputModel.CurrentIndex = (rows * page) - (rows - 1); // (5 * 1) - (5 - 1) = 1, first page index example
+
+        await GetData();
+
+    }
+
+    private async Task<int> GetPages()
+    {
+        int rows = Convert.ToInt32(inputModel.RowsPerPage);
+        return await Provider.GetDBRowCountsFromIndex(rows);
+    }
+
+    private async void DeterminePageNumber()
+    {
+
+        int pages = await GetPages();
+
+        for (int i = 1; i <= pages; i++)
+        {
+            int rows = Convert.ToInt32(inputModel.RowsPerPage);
+            //determine of the current index is within the row count of the current page
+            if (inputModel.CurrentIndex < (i + rows))
+            {
+                inputModel.CurrentPage = i.ToString();
+                inputModel.CurrentIndex = (i * rows) - (rows - 1); // (5 * 1) - (5 - 1) = 1, first page index example
+                break;
+            }
+        }
+    }
 
 
 
