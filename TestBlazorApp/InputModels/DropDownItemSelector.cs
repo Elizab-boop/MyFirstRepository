@@ -9,8 +9,10 @@ namespace TestBlazorApp.InputModels
     public class DropDownItemSelector
     {
         [Required]  
-        public string ID { get; set; } = "1";
+        public string RowsPerPage { get; set; } = "5"; //initialize to first value acceptable in this instance
 
-        public int MaxValue { get; set; } = 20;
+        public string CurrentPage { get; set; } = "1"; //initialize to page 1
+
+        public int CurrentIndex { get; set; } = 1; //initialize to first ID of DB
     }
 }
